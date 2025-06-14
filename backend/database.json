@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "nome": "Admin",
+        "sobrenome": "User",
+        "email": "admin@admin.com",
+        "hashed_password": "$2b$12$U7OzILsv5r69TaEnDV/ZxeLdT3rRTfy/Sx/vvsO9Sp.cgu7/jsRW6"
+    },
+    {
+        "id": 2,
+        "nome": "Matheus",
+        "sobrenome": "Lima",
+        "email": "matheus@wesafer.com",
+        "hashed_password": "$2b$12$k03khhCmw4zKvVHY6A5M3eTSsyXZ7R64N8Jzt7Xw6rczvkHuJNvQy"
+    }
+]

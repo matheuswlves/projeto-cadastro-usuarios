@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import UserManagementPage from './pages/UserManagementPage';
-import { useAuth } from './hooks/useAuth';
+import React from 'react';
+import LoginPage from '././pages/LoginPage';
+import UserManagementPage from '././pages/UserManagementPage';
+import { useAuth } from '././hooks/useAuth';
 import { Box, CircularProgress } from '@mui/material';
-import Navbar from './components/Navbar';
+import Navbar from '././components/Navbar';
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth();

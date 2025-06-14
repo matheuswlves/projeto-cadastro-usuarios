@@ -1,5 +1,6 @@
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
+import React from 'react';
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
