@@ -1,13 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import users  
-from . import crud, schemas 
+from .routers import users
+from . import crud, schemas
 
 app = FastAPI(title="API de Cadastro de Usuários com JSON DB")
 
 origins = [
     "http://localhost:3000",
-    "http://localhost:5173", 
     "https://projeto-cadastro-usuarios-zpdi.vercel.app", 
 ]
 
@@ -29,7 +28,7 @@ def read_root():
 def create_first_user_if_needed():
     users = crud.get_users()
     if not users:
-        print("Banco de dados JSON vazio. Criando usuário administrador padrão...")
+        print("Criando usuário administrador padrão...")
         admin_user = schemas.UserCreate(
             email="admin@admin.com",
             nome="Admin",
@@ -37,4 +36,4 @@ def create_first_user_if_needed():
             senha="admin"
         )
         crud.create_user(user=admin_user)
-        print("Usuário 'admin@admin.com' com senha 'admin' criado com sucesso.")
+        print("Usuário 'admin@admin.com' criado.")
