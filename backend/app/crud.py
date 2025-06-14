@@ -7,9 +7,7 @@ from . import schemas, security
 DATABASE_FILE = "database.json"
 db_lock = threading.Lock()
 
-
 def _read_db() -> List[Dict]:
-    """Lê todo o conteúdo do arquivo JSON."""
     with db_lock:
         try:
             with open(DATABASE_FILE, "r") as f:
@@ -18,57 +16,75 @@ def _read_db() -> List[Dict]:
             return []
 
 def _write_db(data: List[Dict]):
-    """Escreve a lista completa de dados de volta no arquivo JSON."""
     with db_lock:
         with open(DATABASE_FILE, "w") as f:
             json.dump(data, f, indent=4)
 
-
 def get_users() -> List[schemas.UserOut]:
-    """Retorna todos os usuários."""
     users_db = _read_db()
-    return users_db
+    users_out = []
+    for user in users_db:
+        user_copy = user.copy()
+        user_copy.pop("hashed_password", None)
+        users_out.append(user_copy)
+    return users_out
 
 def get_user_by_email(email: str) -> Optional[Dict]:
-    print("--------------------------------------------------")
-    print(f"--- CRUD: Iniciando busca pelo e-mail: '{email}' ---")
-    
-    users_db = _read_db()
-    
-    print(f"--- CRUD: Conteúdo lido do database.json: {users_db} ---")
-    
-    for user in users_db:
-        print(f"--- CRUD: Comparando o e-mail recebido '{email}' com o e-mail do usuário no DB '{user.get('email')}' ---")
+    for user in _read_db():
         if user.get("email") == email:
-            print("--- CRUD: SUCESSO! Usuário ENCONTRADO. ---")
-            print("--------------------------------------------------")
             return user
-
-    print("--- CRUD: FALHA! Usuário NÃO encontrado após verificar todos os registros. ---")
-    print("--------------------------------------------------")
     return None
 
 def create_user(user: schemas.UserCreate) -> Dict:
-    """Cria um novo usuário."""
     users_db = _read_db()
-
     if get_user_by_email(user.email):
         return {"error": "Email already registered"}
-
-    new_id = len(users_db) + 1
+    
+    new_id = max([u.get('id', 0) for u in users_db] + [0]) + 1
     hashed_password = security.get_password_hash(user.senha)
-
     new_user = {
         "id": new_id,
         "nome": user.nome,
         "sobrenome": user.sobrenome,
         "email": user.email,
-        "hashed_password": hashed_password  
+        "hashed_password": hashed_password
     }
-
     users_db.append(new_user)
     _write_db(users_db)
-
     user_out = new_user.copy()
     user_out.pop("hashed_password")
     return user_out
+
+def update_user(user_id: int, user_update: schemas.UserUpdate) -> Optional[Dict]:
+    users_db = _read_db()
+    user_found = False
+    for i, user in enumerate(users_db):
+        if user.get("id") == user_id:
+            users_db[i]["nome"] = user_update.nome
+            users_db[i]["sobrenome"] = user_update.sobrenome
+            users_db[i]["email"] = user_update.email
+            user_found = True
+            break
+    
+    if user_found:
+        _write_db(users_db)
+        user_out = users_db[i].copy()
+        user_out.pop("hashed_password", None)
+        return user_out
+    return None
+
+def delete_user(user_id: int) -> Optional[Dict]:
+    users_db = _read_db()
+    user_to_delete = None
+    for user in users_db:
+        if user.get("id") == user_id:
+            user_to_delete = user
+            break
+
+    if user_to_delete:
+        users_db.remove(user_to_delete)
+        _write_db(users_db)
+        user_out = user_to_delete.copy()
+        user_out.pop("hashed_password", None)
+        return user_out
+    return None

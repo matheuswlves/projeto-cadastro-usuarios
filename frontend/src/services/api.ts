@@ -39,3 +39,6 @@ export const login = (data: URLSearchParams) =>
 
 export const getUsers = () => apiClient.get<User[]>('/users/');
 export const createUser = (data: UserPayload) => apiClient.post('/users/', data);
+
+export const updateUser = (id: number, data: UserPayload) => apiClient.put(`/users/${id}`, data);
+export const deleteUser = (id: number) => apiClient.delete(`/users/${id}`);

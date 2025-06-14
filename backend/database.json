@@ -9,8 +9,8 @@
     {
         "id": 2,
         "nome": "Matheus",
-        "sobrenome": "Lima",
+        "sobrenome": "Almeida",
         "email": "matheus@wesafer.com",
-        "hashed_password": "$2b$12$k03khhCmw4zKvVHY6A5M3eTSsyXZ7R64N8Jzt7Xw6rczvkHuJNvQy"
+        "hashed_password": "$2b$12$MkdqZ0pgUiFrU8U0/NM5c.eNIGyBdpTOpkplhcAMglpqm8ZYC2koa"
     }
 ]
