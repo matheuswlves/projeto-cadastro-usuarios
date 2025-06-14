@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import users
+from app.routers import users
 from . import crud, schemas
 
 app = FastAPI(title="API de Cadastro de Usuários com JSON DB")
