@@ -1,23 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import users
-from . import crud, schemas
+from .routers import users  
+from . import crud, schemas 
 
 app = FastAPI(title="API de Cadastro de Usuários com JSON DB")
 
 origins = [
     "http://localhost:3000",
-    "http://localhost",
-    "projeto-cadastro-usuarios-edpa.vercel.app",
+    "http://localhost:5173", 
+    "https://projeto-cadastro-usuarios-zpdi.vercel.app", 
 ]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"], 
-    allow_headers=["*"], 
-)
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,7 +27,6 @@ def read_root():
 
 @app.on_event("startup")
 def create_first_user_if_needed():
-    
     users = crud.get_users()
     if not users:
         print("Banco de dados JSON vazio. Criando usuário administrador padrão...")
