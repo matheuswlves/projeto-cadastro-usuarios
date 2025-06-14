@@ -7,16 +7,18 @@ app = FastAPI(title="API de Cadastro de Usuários com JSON DB")
 
 origins = [
     "http://localhost:3000",
-    "https://projeto-cadastro-usuarios-zpdi.vercel.app", 
+    "http://localhost:5173",
+    "https://projeto-cadastro-usuarios-zpdi.vercel.app", # Sua URL da Vercel
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
+
 
 app.include_router(users.router, prefix="/api")
 

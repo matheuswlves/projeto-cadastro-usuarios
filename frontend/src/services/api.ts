@@ -15,7 +15,7 @@ export interface UserPayload {
 }
 
 const apiClient = axios.create({
-  baseURL: 'https://projeto-cadastro-usuarios-1.onrender.com', 
+  baseURL: 'http://localhost:8000/api', 
   headers: { 'Content-Type': 'application/json' },
 });
 
