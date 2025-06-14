@@ -6,8 +6,18 @@ from . import crud, schemas
 app = FastAPI(title="API de Cadastro de Usuários com JSON DB")
 
 origins = [
-    "http://localhost:3000",  
+    "http://localhost:3000",
+    "http://localhost",
+    "projeto-cadastro-usuarios-edpa.vercel.app",
 ]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"], 
+    allow_headers=["*"], 
+)
 
 app.add_middleware(
     CORSMiddleware,
