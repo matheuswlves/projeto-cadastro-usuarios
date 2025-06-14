@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from typing import List
 from app import crud, schemas, security
 
-router = APIRouter(prefix="/api", tags=["Users & Authentication"])
+router = APIRouter(tags=["Users & Authentication"])
 
 @router.post("/token", response_model=schemas.Token)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
